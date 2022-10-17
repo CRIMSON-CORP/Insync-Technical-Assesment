@@ -10,6 +10,7 @@
     "plugin:prettier/recommended",
     "airbnb",
     "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "prettier"
   ],
   "overrides": [],
@@ -20,7 +21,11 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "prettier/prettier": "warn",
-    "global-require": "off"
+    "global-require": "off",
+    "no-unused-vars": "warn",
+    "react/jsx-filename-extension": "off",
+    "no-use-before-define": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
 
