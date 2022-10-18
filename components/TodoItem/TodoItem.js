@@ -7,7 +7,7 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { updateTodo } from '../../utils/actionCreator';
+import { updateTodoCompleted } from '../../utils/actionCreator';
 
 const AnimatedPressableTodoItem = Animated.createAnimatedComponent(Pressable);
 
@@ -44,24 +44,27 @@ function TodoItem({ id, completed, title, dispatch }) {
     color: interpolateColor(animatedTextShared.value, [0, 1], ['#FFF', '#999']),
   }));
 
-  const updateCompleted = useCallback(() => dispatch(updateTodo(id)), []);
+  const updateCompleted = useCallback(
+    () => dispatch(updateTodoCompleted(id)),
+    []
+  );
 
   return (
     <View style={styles.wrapper}>
-      <AnimatedPressableTodoItem
-        style={styles.todoItem}
-        onPress={updateCompleted}>
-        <View style={styles.textWrapper}>
-          <View style={styles.strokeRelative}>
-            <Animated.Text style={[styles.text, animatedTextStyle]}>
-              {title}
-            </Animated.Text>
-            <Animated.View
-              style={[styles.completedStroke, animatedStrokeStyle]}
-            />
-          </View>
-        </View>
-      </AnimatedPressableTodoItem>
+        <AnimatedPressableTodoItem
+          onPress={updateCompleted}
+          style={[styles.todoItem, animatedPressableStyles]}>
+            <View style={styles.textWrapper}>
+              <View style={styles.strokeRelative}>
+                <Animated.Text style={[styles.text, animatedTextStyle]}>
+                  {title}
+                </Animated.Text>
+                <Animated.View
+                  style={[styles.completedStroke, animatedStrokeStyle]}
+                />
+              </View>
+            </View>
+        </AnimatedPressableTodoItem>
     </View>
   );
 }

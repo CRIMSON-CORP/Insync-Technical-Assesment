@@ -1,4 +1,4 @@
-import { CREATE_TODO, UPDATE_TODO } from './actionTypes';
+import { CREATE_TODO, UPDATE_TODO_COMPLETED } from './actionTypes';
 
 /**
  * @param {string} task
@@ -15,9 +15,9 @@ export function createTodo(task) {
  * @param {string} id
  * @returns {{type:string, payload:string}}
  */
-export function updateTodo(id) {
+export function updateTodoCompleted(id) {
   return {
-    type: UPDATE_TODO,
+    type: UPDATE_TODO_COMPLETED,
     payload: id,
   };
 }

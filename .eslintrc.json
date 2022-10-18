@@ -26,7 +26,8 @@
     "react/jsx-filename-extension": "off",
     "no-use-before-define": "off",
     "import/no-extraneous-dependencies": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "no-param-reassign": "off"
   }
 }
 
