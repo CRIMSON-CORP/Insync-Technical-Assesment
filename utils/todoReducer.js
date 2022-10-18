@@ -59,9 +59,8 @@ export default function todoReducer(state, action) {
       return state.filter((todos) => todos.id !== action.payload);
     }
     case UPDATE_TODO_TEXT: {
-      console.log(action.payload.newTitle);
       return state.map((todo) => {
-        if (todo.id !== action.payload.id) {
+        if (todo.id === action.payload.id) {
           todo.title = action.payload.newTitle;
         }
         return todo;

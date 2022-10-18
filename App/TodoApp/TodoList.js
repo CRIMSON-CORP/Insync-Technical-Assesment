@@ -1,6 +1,7 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Text, TodoItem } from '../../components';
 
 /**
@@ -23,16 +24,22 @@ import { Text, TodoItem } from '../../components';
  */
 
 function TodoList({ todos, dispatch }) {
+  const simulteneousHandler = useRef();
   return (
-    <View>
+    <View style={styles.wrapper}>
       <Text size={30} weight={200}>
         Todos
       </Text>
-      <FlatList
-        data={todos}
-        keyExtractor={(todo) => todo.id}
-        renderItem={({ item }) => <TodoItem {...item} dispatch={dispatch} />}
-      />
+      <ScrollView style={styles.wrapper}>
+        {todos.map((item) => (
+          <TodoItem
+            {...item}
+            key={item.id}
+            dispatch={dispatch}
+            simulteneousHandler={simulteneousHandler}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -49,3 +56,7 @@ TodoList.propTypes = {
 };
 
 export default TodoList;
+
+const styles = StyleSheet.create({
+  wrapper: { flex: 1 },
+});

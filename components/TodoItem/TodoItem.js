@@ -15,11 +15,18 @@ import Animated, {
   useAnimatedGestureHandler,
   withSpring,
   runOnJS,
+  Layout,
+  FadeOut,
+  SlideInLeft,
 } from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import FetherIcon from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { deleteTodo, updateTodoCompleted } from '../../utils/actionCreator';
+import {
+  deleteTodo,
+  updateTodoCompleted,
+  updateTodoTitle,
+} from '../../utils/actionCreator';
 
 const AnimatedPressableTodoItem = Animated.createAnimatedComponent(Pressable);
 const { width: screenWidth } = Dimensions.get('window');
@@ -41,7 +48,7 @@ const MAX_SWIPE_VALUE = 60;
 const EDIT_THRESHOLD = 40;
 const DELETE_THRESHOLD = -100;
 
-function TodoItem({ id, completed, title, dispatch }) {
+function TodoItem({ id, completed, title, dispatch, simulteneousHandler }) {
   const animatedStrokeShared = useSharedValue(0);
   const animatedTextShared = useSharedValue(0);
   const todoItemTranslateShared = useSharedValue(0);
@@ -78,9 +85,14 @@ function TodoItem({ id, completed, title, dispatch }) {
     [editTextValue]
   );
 
-  const deleteTodoCallBack = useCallback(() => {
+  const deleteTodoItem = useCallback(() => {
     dispatch(deleteTodo(id));
   }, [id]);
+
+  const updateTodoItemTitle = useCallback(() => {
+    dispatch(updateTodoTitle(id, editTextValue));
+    setEditMode(false);
+  }, [editTextValue]);
 
   const gesture = useAnimatedGestureHandler({
     onStart: (_, ctx) => {
@@ -96,12 +108,12 @@ function TodoItem({ id, completed, title, dispatch }) {
     },
     onFinish: (e) => {
       if (e.translationX > EDIT_THRESHOLD) {
-        todoItemTranslateShared.value = withSpring(0, undefined, () =>
+        todoItemTranslateShared.value = withTiming(0, undefined, () =>
           runOnJS(setEditMode)(true)
         );
       } else if (e.translationX < DELETE_THRESHOLD) {
         todoItemTranslateShared.value = withTiming(-screenWidth, {}, () =>
-          runOnJS(deleteTodoCallBack)()
+          runOnJS(deleteTodoItem)()
         );
       } else {
         todoItemTranslateShared.value = withSpring(0);
@@ -114,7 +126,11 @@ function TodoItem({ id, completed, title, dispatch }) {
   }));
 
   return (
-    <View style={styles.wrapper}>
+    <Animated.View
+      style={styles.wrapper}
+      entering={SlideInLeft}
+      exiting={FadeOut}
+      layout={Layout.springify()}>
       <View style={styles.backView}>
         <FetherIcon name="edit-3" color="#039BE5" size={20} />
         <MaterialCommunityIcons
@@ -123,7 +139,9 @@ function TodoItem({ id, completed, title, dispatch }) {
           size={20}
         />
       </View>
-      <PanGestureHandler onGestureEvent={gesture}>
+      <PanGestureHandler
+        simultaneousHandlers={simulteneousHandler}
+        onGestureEvent={gesture}>
         <AnimatedPressableTodoItem
           onPress={updateCompleted}
           style={[styles.todoItem, animatedPressableStyles]}>
@@ -133,6 +151,8 @@ function TodoItem({ id, completed, title, dispatch }) {
               style={styles.text}
               value={editTextValue}
               onChangeText={updateEditTextValue}
+              onBlur={updateTodoItemTitle}
+              onSubmitEditing={updateTodoItemTitle}
             />
           ) : (
             <View style={styles.textWrapper}>
@@ -148,7 +168,7 @@ function TodoItem({ id, completed, title, dispatch }) {
           )}
         </AnimatedPressableTodoItem>
       </PanGestureHandler>
-    </View>
+    </Animated.View>
   );
 }
 

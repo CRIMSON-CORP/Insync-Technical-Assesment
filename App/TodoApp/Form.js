@@ -60,6 +60,7 @@ function Form({ dispatch }) {
         style={styles.textInput}
         selectionColor="#FF00FF"
         onChangeText={updateTextValue}
+        onSubmitEditing={onSubmit}
       />
       <AnimatedPresssbale
         onPress={onSubmit}
