@@ -1,11 +1,14 @@
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from './Header';
+import TodoApp from './TodoApp';
 
 function Main() {
   return (
-    <View style={styles.wrapper}>
+    <SafeAreaView style={styles.wrapper}>
       <Header />
-    </View>
+      <TodoApp />
+    </SafeAreaView>
   );
 }
 
@@ -15,5 +18,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: '#483D8B',
+    padding: 20,
   },
 });
