@@ -50,7 +50,7 @@ function TodoList({ todos, dispatch }) {
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       completed: PropTypes.bool,
       title: PropTypes.string,
     })

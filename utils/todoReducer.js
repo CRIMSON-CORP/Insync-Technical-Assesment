@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid/non-secure';
 import {
+  APPEND_TO_TODO_LIST,
   CREATE_TODO,
   DELETE_TODO,
   UPDATE_TODO_COMPLETED,
@@ -65,6 +66,9 @@ export default function todoReducer(state, action) {
         }
         return todo;
       });
+    }
+    case APPEND_TO_TODO_LIST: {
+      return [...action.payload, ...state];
     }
     default:
       return state;

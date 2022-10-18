@@ -173,7 +173,7 @@ function TodoItem({ id, completed, title, dispatch, simulteneousHandlers }) {
 }
 
 TodoItem.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   completed: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
