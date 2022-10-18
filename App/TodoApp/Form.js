@@ -48,7 +48,7 @@ function Form({ dispatch }) {
   );
 
   const onSubmit = useCallback(() => {
-    if (!textValue) return Alert.alert('Please write a task!');
+    if (!textValue) return Alert.alert('Please write a Todo!');
     dispatch(createTodo(textValue));
     return setTextValue('');
   }, [textValue]);
@@ -65,7 +65,7 @@ function Form({ dispatch }) {
         onPress={onSubmit}
         style={[styles.pressable, pressableAnimatedBackgroundStyle]}>
         <Text style={styles.pressableText} weight={600}>
-          Add Task
+          Add Todo
         </Text>
       </AnimatedPresssbale>
     </View>

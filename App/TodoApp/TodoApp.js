@@ -1,11 +1,11 @@
 import { useReducer } from 'react';
 import { View } from 'react-native';
-import taskReducer from '../../utils/taskReducer';
+import todoReducer from '../../utils/todoReducer';
 import Form from './Form';
 import TodoList from './TodoList';
 
 function TodoApp() {
-  const [todos, dispatch] = useReducer(taskReducer, []);
+  const [todos, dispatch] = useReducer(todoReducer, []);
 
   return (
     <View>

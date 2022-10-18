@@ -1,13 +1,13 @@
 import { CREATE_TODO, DELETE_TODO, UPDATE_TODO_COMPLETED } from './actionTypes';
 
 /**
- * @param {string} task
+ * @param {string} title
  * @returns {{type:string, payload:string}}
  */
-export function createTodo(task) {
+export function createTodo(title) {
   return {
     type: CREATE_TODO,
-    payload: task,
+    payload: title,
   };
 }
 

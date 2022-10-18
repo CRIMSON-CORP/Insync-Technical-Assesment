@@ -42,7 +42,7 @@ TodoList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       completed: PropTypes.bool,
-      task: PropTypes.string,
+      title: PropTypes.string,
     })
   ).isRequired,
   dispatch: PropTypes.func.isRequired,
