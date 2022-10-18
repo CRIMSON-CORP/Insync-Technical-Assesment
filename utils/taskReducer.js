@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid/non-secure';
-import { CREATE_TODO, UPDATE_TODO_COMPLETED } from './actionTypes';
+import { CREATE_TODO, DELETE_TODO, UPDATE_TODO_COMPLETED } from './actionTypes';
 
 /**
  * @typedef TodoItem
@@ -40,6 +40,13 @@ export default function taskReducer(state, action) {
         }
         return todo;
       });
+    }
+    case DELETE_TODO: {
+      const todoToDeleteIndex = state.findIndex(
+        (todo) => todo.id === action.payload
+      );
+      state.splice(todoToDeleteIndex, 1);
+      return [...state];
     }
     default:
       return state;
