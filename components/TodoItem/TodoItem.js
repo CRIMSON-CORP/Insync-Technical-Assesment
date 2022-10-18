@@ -48,7 +48,7 @@ const MAX_SWIPE_VALUE = 60;
 const EDIT_THRESHOLD = 40;
 const DELETE_THRESHOLD = -100;
 
-function TodoItem({ id, completed, title, dispatch, simulteneousHandler }) {
+function TodoItem({ id, completed, title, dispatch, simulteneousHandlers }) {
   const animatedStrokeShared = useSharedValue(0);
   const animatedTextShared = useSharedValue(0);
   const todoItemTranslateShared = useSharedValue(0);
@@ -140,7 +140,7 @@ function TodoItem({ id, completed, title, dispatch, simulteneousHandler }) {
         />
       </View>
       <PanGestureHandler
-        simultaneousHandlers={simulteneousHandler}
+        simultaneousHandlers={simulteneousHandlers}
         onGestureEvent={gesture}>
         <AnimatedPressableTodoItem
           onPress={updateCompleted}
@@ -177,6 +177,8 @@ TodoItem.propTypes = {
   completed: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  simulteneousHandlers: PropTypes.object.isRequired,
 };
 
 export default TodoItem;

@@ -24,19 +24,22 @@ import { Text, TodoItem } from '../../components';
  */
 
 function TodoList({ todos, dispatch }) {
-  const simulteneousHandler = useRef();
+  const simulteneousHandlers = useRef();
   return (
     <View style={styles.wrapper}>
       <Text size={30} weight={200}>
         Todos
       </Text>
-      <ScrollView style={styles.wrapper}>
+      <ScrollView
+        style={styles.wrapper}
+        ref={simulteneousHandlers}
+        showsVerticalScrollIndicator={false}>
         {todos.map((item) => (
           <TodoItem
             {...item}
             key={item.id}
             dispatch={dispatch}
-            simulteneousHandler={simulteneousHandler}
+            simulteneousHandlers={simulteneousHandlers}
           />
         ))}
       </ScrollView>
